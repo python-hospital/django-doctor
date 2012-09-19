@@ -1,0 +1,47 @@
+{% extends "doctor/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Technical information' %} &mdash; {{ block.super }}{% endblock %}
+
+{% block content %}
+	<h2>
+		{% trans 'Technical information' %}
+	</h2>
+	
+	
+	<h3>
+		{% trans 'Module versions' %}
+	</h3>
+	
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>{% trans 'Name' %}</th>
+				<th>{% trans 'Version' %}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for package, version in versions.iteritems %}
+				<tr>
+					<td>{{ package }}</td>
+					<td>{{ version }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+
+	<h3>
+		{% trans 'Environment' %}
+	</h3>
+	
+	<pre>{% for key,val in environ.items %}{{ key }}: {{ val }}<br>{% endfor %}</pre>
+	
+
+	<h3>
+		{% trans 'Paths' %}
+	</h3>
+	
+	<pre>{% for path in paths %}{{ path }}<br>{% endfor %}</pre>
+
+{% endblock %}
