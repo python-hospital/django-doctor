@@ -18,7 +18,6 @@ setup(name='django-doctor',
     author_email='post@funkbit.no',
     url='https://github.com/funkbit/django-doctor',
     packages=['doctor', 'doctor.management', 'doctor.management.commands'],
-    package_data={'doctor': ['templates/doctor/*']},
     tests_require=['django>=1.1,<1.4'],
     license='BSD',
     classifiers = (

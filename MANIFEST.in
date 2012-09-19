@@ -1,2 +1,3 @@
+recursive-include doctor/templates *
 include README.md
 include LICENSE
