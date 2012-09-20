@@ -53,6 +53,9 @@ def index(request):
                 cache_message = 'From cache, set at %s' % datetime.datetime.now()
                 cache.set(CACHE_KEY, cache_message, 10)
 
+                if cache_message != cache.get(CACHE_KEY):
+                    is_cache_working = False
+
                 # Get again, to see if the message is persisted in cache
                 cache_message = cache.get(CACHE_KEY, 'Data not persisted in cache.')
 
