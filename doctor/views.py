@@ -12,11 +12,16 @@ from django.utils.datastructures import SortedDict
 from django.utils.importlib import import_module
 from django.views.debug import cleanse_setting
 
+from . import __version__ as doctor_version
+
 # Fetch the socket name
 socket_name = socket.gethostname()
 
-# Base template extended by all templates
-BASE_TEMPLATE = getattr(settings, 'DOCTOR_BASE_TEMPLATE', 'base.html')
+# Doctor template variables
+DOCTOR_CONTEXT = {
+    'base_template': getattr(settings, 'DOCTOR_BASE_TEMPLATE', 'base.html'),
+    'version': doctor_version,
+}
 
 def index(request):
     """
@@ -94,7 +99,7 @@ def index(request):
         celery_info['message'] = celery_message
 
     return render(request, 'doctor/index.html', {
-        'base_template': BASE_TEMPLATE,
+        'doctor': DOCTOR_CONTEXT,
         'cache': caches_info,
         'celery': celery_info,
     })
@@ -159,7 +164,7 @@ def technical_info(request):
         environ[key] = cleanse_setting(key, val)
 
     return render(request, 'doctor/technical_info.html', {
-        'base_template': BASE_TEMPLATE,
+        'doctor': DOCTOR_CONTEXT,
         'versions': SortedDict(versions),
         'environ': environ,
         'paths': sys.path,

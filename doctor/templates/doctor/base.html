@@ -1,1 +1,19 @@
-{% extends base_template %}
+{% extends doctor.base_template %}
+{% load i18n %}
+
+{% block content %}
+	
+	{% block doctor-content %}{% endblock %}
+
+	{% block doctor-footer %}
+		<footer class="muted" style="text-align: center; margin: 32px 0;">
+			<p>
+				<a href="{% url "doctor-index" %}">{% trans 'Health checks' %}</a> &nbsp; 
+				<a href="{% url "doctor-technical" %}">{% trans 'Technical information' %}</a>
+			</p>
+			<p>
+				Powered by <a href="https://github.com/funkbit/django-doctor">Django Doctor</a> {{ doctor.version }}
+			</p>
+		</footer>
+	{% endblock %}
+{% endblock %}
