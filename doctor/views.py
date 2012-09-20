@@ -73,6 +73,7 @@ def index(request):
 
     # Celery check
     celery_info = {}
+
     if 'djcelery' in settings.INSTALLED_APPS:
 
         is_celery_working = False
@@ -88,15 +89,26 @@ def index(request):
             celery_stats = insp.stats()
 
             if celery_stats:
+                is_celery_working = True
                 celery_message = celery_stats
             else:
                 celery_message = 'No running Celery workers found.'
 
         except Exception as ex:
             celery_message = 'Could not connect to the backend: %s' % str(ex)
-
-        celery_info['is_working'] = is_celery_working
-        celery_info['message'] = celery_message
+        
+        # Format the status messages
+        if is_celery_working:
+            for key, val in celery_message.iteritems():
+                celery_info[key] = {
+                    'settings': val,
+                    'is_working': is_celery_working,
+                }
+        else:
+            # Set the error message
+            celery_info['default'] = {}
+            celery_info['default']['is_working'] = is_celery_working
+            celery_info['default']['message'] = celery_message
 
     return render(request, 'doctor/index.html', {
         'doctor': DOCTOR_CONTEXT,

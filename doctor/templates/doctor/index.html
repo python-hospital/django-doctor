@@ -42,7 +42,15 @@
 								{% for key, val in info.settings.iteritems %}
 									<tr>
 										<td><code>{{ key }}</code></td>
-										<td><code>{{ val }}</code></td>
+										<td>
+											{% if val.iteritems %}
+												{% for sub_key, sub_val in val.iteritems %}
+													<code>{{ sub_key }}: {{ sub_val }}</code><br>
+												{% endfor %}
+											{% else %}
+												<code>{{ val }}</code>
+											{% endif %}
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>
@@ -61,15 +69,19 @@
 	{% if celery %}
 		<table class="table">
 			<tbody>
+			{% for name, info in celery.iteritems %}
 				<tr>
 					<td style="width: 40%;">
-						{% if celery.is_working %}
+						{% if info.is_working %}
+							<h4>
+								{{ name }}
+							</h4>
 							<strong>{% trans 'Status:' %}</strong> {% trans 'OK' %}<br>
-							<small class="muted">{{ celery.message }}</small>
+							<small class="muted">{{ info.message }}</small>
 						{% else %}
 							<div class="alert alert-error">
 								<h4>{% trans 'Error' %}</h4>
-								{{ celery.message }}
+								{{ info.message }}
 							</div>
 						{% endif %}
 					</td>
@@ -81,10 +93,18 @@
 								<th>{% trans 'Value' %}</th>
 							</thead>
 							<tbody>
-								{% for key, val in celery.settings.iteritems %}
+								{% for key, val in info.settings.iteritems %}
 									<tr>
 										<td><code>{{ key }}</code></td>
-										<td><code>{{ val }}</code></td>
+										<td>
+											{% if val.iteritems %}
+												{% for sub_key, sub_val in val.iteritems %}
+													<code>{{ sub_key }}: {{ sub_val }}</code><br>
+												{% endfor %}
+											{% else %}
+												<code>{{ val }}</code>
+											{% endif %}
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>
@@ -92,6 +112,7 @@
 
 					</td>
 				</tr>
+			{% endfor %}
 			</tbody>
 		</table>
 	{% else %}
