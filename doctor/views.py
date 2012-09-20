@@ -66,9 +66,37 @@ def index(request):
             'settings': settings.CACHES[cache_name],
         }
 
+    # Celery check
+    celery_info = {}
+    if 'djcelery' in settings.INSTALLED_APPS:
+
+        is_celery_working = False
+
+        try:
+            from celery.task.control import inspect
+        except ImportError as ex:
+            celery_message = str(ex)
+
+        insp = inspect()
+
+        try:
+            celery_stats = insp.stats()
+
+            if celery_stats:
+                celery_message = celery_stats
+            else:
+                celery_message = 'No running Celery workers found.'
+
+        except Exception as ex:
+            celery_message = 'Could not connect to the backend: %s' % str(ex)
+
+        celery_info['is_working'] = is_celery_working
+        celery_info['message'] = celery_message
+
     return render(request, 'doctor/index.html', {
         'base_template': BASE_TEMPLATE,
         'cache': caches_info,
+        'celery': celery_info,
     })
 
 def health_check(request):

@@ -54,4 +54,49 @@
 		</tbody>
 	</table>
 
+	<h3>
+		{% trans 'Celery' %}
+	</h3>
+
+	{% if celery %}
+		<table class="table">
+			<tbody>
+				<tr>
+					<td style="width: 40%;">
+						{% if celery.is_working %}
+							<strong>{% trans 'Status:' %}</strong> {% trans 'OK' %}<br>
+							<small class="muted">{{ celery.message }}</small>
+						{% else %}
+							<div class="alert alert-error">
+								<h4>{% trans 'Error' %}</h4>
+								{{ celery.message }}
+							</div>
+						{% endif %}
+					</td>
+					<td>
+						
+						<table class="table table-bordered table-condensed">
+							<thead>
+								<th>{% trans 'Setting' %}</th>
+								<th>{% trans 'Value' %}</th>
+							</thead>
+							<tbody>
+								{% for key, val in celery.settings.iteritems %}
+									<tr>
+										<td><code>{{ key }}</code></td>
+										<td><code>{{ val }}</code></td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	{% else %}
+		<div class="alert alert-info">
+			Celery is not installed.
+		</div>
+	{% endif %}
 {% endblock %}
