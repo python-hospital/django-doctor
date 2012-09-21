@@ -13,4 +13,5 @@ TEMPLATE_CONTEXT = {
 SERVICES = getattr(settings, 'DOCTOR_SERVICES', (
     'doctor.services.cache.CacheServiceCheck',
     'doctor.services.celery.CeleryServiceCheck',
+    'doctor.services.storage.StorageServiceCheck',
 ))

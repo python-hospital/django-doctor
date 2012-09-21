@@ -15,9 +15,6 @@ class CacheServiceCheck(BaseServiceCheck):
     #template = ''
 
     def status(self):
-        return self.get_status()
-
-    def get_status(self):
 
         caches_info = {}
 
