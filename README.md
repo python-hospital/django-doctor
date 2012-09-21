@@ -1,8 +1,8 @@
-# django-doctor
+# Django Doctor
 
-django-doctor is a Django app for checking the operational status of a Django 
-installation. It includes checking that caching and storage is correctly 
-set up, that email is working, etc. 
+django-doctor is a Django pluggable app for checking the operational status of 
+a Django installation. It includes checking that caching and storage is 
+correctly set up, that email is working, etc. 
 
 This is an early draft, so use it at your own risk. 
 
@@ -13,13 +13,16 @@ Install `django-doctor` (available on PyPi):
 
 	pip install django-doctor
 
-Add it to `INSTALLED_APPS` in your `settings.py`:
+Add it to `INSTALLED_APPS` in your `settings.py` (so Django can locate template):
 
 	INSTALLED_APPS += ['doctor']
 
-And add it to your root urls.py file:
-
-	url(r'^doctor/', include('doctor.urls')),
+And add it to your root URLconf:
+    
+    urlpatterns = patterns('',
+	   url(r'^doctor/', include('doctor.urls')),
+       ...
+    )
 
 
 ## Settings
@@ -38,6 +41,12 @@ These are the available configurable settings, along with their default values:
         <td>The template all the doctor templates should inherit from</td>
     </tr>
 </table>
+
+## Services
+
+We are working on making a pluggable structure for the service check, work in progress. 
+Checks for cache and Sentry are currently included by default.
+
 
 ## Tests
 

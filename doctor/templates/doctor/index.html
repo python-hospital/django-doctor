@@ -8,116 +8,61 @@
 		{% trans 'Health checks' %}
 	</h2>
 
-	<h3>
-		{% trans 'Cache' %}
-	</h3>
+	{% for service in services %}
+		<h3>
+			{{ service.name }}
+		</h3>
 
-	<table class="table">
-		<tbody>
-			{% for cache_name, info in cache.iteritems %}
-				<tr>
-					<td style="width: 40%;">
-						<h4>
-							{{ cache_name }}
-						</h4>
-
-						{% if info.is_working %}
-							<strong>{% trans 'Status:' %}</strong> {% trans 'OK' %}<br>
-							<small class="muted">{{ info.message }}</small>
-						{% else %}
-							<div class="alert alert-error">
-								<h4>{% trans 'Error' %}</h4>
-								{{ info.message }}
-							</div>
-						{% endif %}
-					</td>
-					<td>
-						
-						<table class="table table-bordered table-condensed">
-							<thead>
-								<th>{% trans 'Setting' %}</th>
-								<th>{% trans 'Value' %}</th>
-							</thead>
-							<tbody>
-								{% for key, val in info.settings.iteritems %}
-									<tr>
-										<td><code>{{ key }}</code></td>
-										<td>
-											{% if val.iteritems %}
-												{% for sub_key, sub_val in val.iteritems %}
-													<code>{{ sub_key }}: {{ sub_val }}</code><br>
-												{% endfor %}
-											{% else %}
-												<code>{{ val }}</code>
-											{% endif %}
-										</td>
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
-	<h3>
-		{% trans 'Celery' %}
-	</h3>
-
-	{% if celery %}
 		<table class="table">
 			<tbody>
-			{% for name, info in celery.iteritems %}
-				<tr>
-					<td style="width: 40%;">
-						{% if info.is_working %}
+				{% for name, info in service.status.iteritems %}
+					<tr>
+						<td style="width: 40%;">
 							<h4>
 								{{ name }}
 							</h4>
-							<strong>{% trans 'Status:' %}</strong> {% trans 'OK' %}<br>
-							<small class="muted">{{ info.message }}</small>
-						{% else %}
-							<div class="alert alert-error">
-								<h4>{% trans 'Error' %}</h4>
-								{{ info.message }}
-							</div>
-						{% endif %}
-					</td>
-					<td>
-						
-						<table class="table table-bordered table-condensed">
-							<thead>
-								<th>{% trans 'Setting' %}</th>
-								<th>{% trans 'Value' %}</th>
-							</thead>
-							<tbody>
-								{% for key, val in info.settings.iteritems %}
-									<tr>
-										<td><code>{{ key }}</code></td>
-										<td>
-											{% if val.iteritems %}
-												{% for sub_key, sub_val in val.iteritems %}
-													<code>{{ sub_key }}: {{ sub_val }}</code><br>
-												{% endfor %}
-											{% else %}
-												<code>{{ val }}</code>
-											{% endif %}
-										</td>
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
 
-					</td>
-				</tr>
-			{% endfor %}
+							{% if info.is_working %}
+								<strong>{% trans 'Status:' %}</strong> {% trans 'OK' %}<br>
+								<small class="muted">{{ info.message }}</small>
+							{% else %}
+								<div class="alert alert-error">
+									<h4>{% trans 'Error' %}</h4>
+									{{ info.message }}
+								</div>
+							{% endif %}
+						</td>
+						<td>
+							
+							{# List key/val settings #}
+							<table class="table table-bordered table-condensed">
+								<thead>
+									<th>{% trans 'Setting' %}</th>
+									<th>{% trans 'Value' %}</th>
+								</thead>
+								<tbody>
+									{% for key, val in info.settings.iteritems %}
+										<tr>
+											<td><code>{{ key }}</code></td>
+											<td>
+												{% if val.iteritems %}
+													{% for sub_key, sub_val in val.iteritems %}
+														<code>{{ sub_key }}: {{ sub_val }}</code><br>
+													{% endfor %}
+												{% else %}
+													<code>{{ val }}</code>
+												{% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+
+						</td>
+					</tr>
+				{% endfor %}
 			</tbody>
 		</table>
-	{% else %}
-		<div class="alert alert-info">
-			Celery is not installed.
-		</div>
-	{% endif %}
+	{% endfor %}
+
 {% endblock %}

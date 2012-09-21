@@ -5,23 +5,21 @@ import sys
 
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.cache import get_cache
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.utils.datastructures import SortedDict
 from django.utils.importlib import import_module
 from django.views.debug import cleanse_setting
 
-from . import __version__ as doctor_version
+from doctor.conf import TEMPLATE_CONTEXT
+from doctor.services import load_service_classes
 
 # Fetch the socket name
 socket_name = socket.gethostname()
 
-# Doctor template variables
-DOCTOR_CONTEXT = {
-    'base_template': getattr(settings, 'DOCTOR_BASE_TEMPLATE', 'base.html'),
-    'version': doctor_version,
-}
+# Load service health check classes
+services = load_service_classes()
+
 
 def index(request):
     """
@@ -32,88 +30,9 @@ def index(request):
     if not request.user.is_superuser:
         raise Http404('Superusers only.')
 
-    caches_info = {}
-
-    # Cache check
-    for cache_name in settings.CACHES.keys():
-
-        is_cache_working = True
-
-        # Try to get the cache backend
-        try:
-            cache = get_cache(cache_name)
-        except Exception as ex:
-            is_cache_working = False
-            cache_message = str(ex)
-
-        # Check the cache backend
-        if is_cache_working:
-            CACHE_KEY = 'doctor-cache-check-%s' % cache_name
-            cache_message = cache.get(CACHE_KEY, None)
-
-            # If cache is empty, update cache
-            if cache_message is None:
-
-                # Set timestamped message in cache
-                cache_message = 'From cache, set at %s' % datetime.datetime.now()
-                cache.set(CACHE_KEY, cache_message, 10)
-
-                if cache_message != cache.get(CACHE_KEY):
-                    is_cache_working = False
-
-                # Get again, to see if the message is persisted in cache
-                cache_message = cache.get(CACHE_KEY, 'Data not persisted in cache.')
-
-        # Create dictionary with status info
-        caches_info[cache_name] = {
-            'is_working': is_cache_working,
-            'message': cache_message,
-            'settings': settings.CACHES[cache_name],
-        }
-
-    # Celery check
-    celery_info = {}
-
-    if 'djcelery' in settings.INSTALLED_APPS:
-
-        is_celery_working = False
-
-        try:
-            from celery.task.control import inspect
-        except ImportError as ex:
-            celery_message = str(ex)
-
-        insp = inspect()
-
-        try:
-            celery_stats = insp.stats()
-
-            if celery_stats:
-                is_celery_working = True
-                celery_message = celery_stats
-            else:
-                celery_message = 'No running Celery workers found.'
-
-        except Exception as ex:
-            celery_message = 'Could not connect to the backend: %s' % str(ex)
-        
-        # Format the status messages
-        if is_celery_working:
-            for key, val in celery_message.iteritems():
-                celery_info[key] = {
-                    'settings': val,
-                    'is_working': is_celery_working,
-                }
-        else:
-            # Set the error message
-            celery_info['default'] = {}
-            celery_info['default']['is_working'] = is_celery_working
-            celery_info['default']['message'] = celery_message
-
     return render(request, 'doctor/index.html', {
-        'doctor': DOCTOR_CONTEXT,
-        'cache': caches_info,
-        'celery': celery_info,
+        'doctor': TEMPLATE_CONTEXT,
+        'services': services,
     })
 
 def health_check(request):
@@ -176,7 +95,7 @@ def technical_info(request):
         environ[key] = cleanse_setting(key, val)
 
     return render(request, 'doctor/technical_info.html', {
-        'doctor': DOCTOR_CONTEXT,
+        'doctor': TEMPLATE_CONTEXT,
         'versions': SortedDict(versions),
         'environ': environ,
         'paths': sys.path,
