@@ -12,7 +12,7 @@ TEMPLATE_CONTEXT = {
 # Installed service checks. You can override this in Django settings
 SERVICES = getattr(settings, 'DOCTOR_SERVICES', (
     'doctor.services.cache.CacheServiceCheck',
-    'doctor.services.celery.CeleryServiceCheck',
+    'doctor.services.celery_check.CeleryServiceCheck',
     'doctor.services.email.EmailServiceCheck',
     'doctor.services.storage.StorageServiceCheck',
 ))

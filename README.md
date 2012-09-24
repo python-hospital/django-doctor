@@ -1,10 +1,10 @@
 # Django Doctor
 
-django-doctor is a Django pluggable app for checking the operational status of 
-a Django installation. It includes checking that caching and storage is 
-correctly set up, that email is working, etc. 
+django-doctor is a Django pluggable application for checking the operational 
+status of a Django installation. It includes checking that caching and storage 
+is correctly set up, that email is working, etc. 
 
-This is an early draft, so use it at your own risk. 
+This is an early draft, so use it at your own risk.
 
 
 ## Installation
@@ -44,7 +44,7 @@ These are the available configurable settings, along with their default values:
         <td><code>DOCTOR_SERVICES</code></td>
         <td>
             <code>'doctor.services.cache.CacheServiceCheck',<br>
-'doctor.services.celery.CeleryServiceCheck',<br>
+'doctor.services.celery_check.CeleryServiceCheck',<br>
 'doctor.services.email.EmailServiceCheck',<br>
 'doctor.services.storage.StorageServiceCheck',</code></td>
         <td>Paths to service check classes.</td>
