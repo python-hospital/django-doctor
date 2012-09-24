@@ -40,6 +40,15 @@ These are the available configurable settings, along with their default values:
         <td><code>'base.html'</code></td>
         <td>The template all the doctor templates should inherit from</td>
     </tr>
+    <tr>
+        <td><code>DOCTOR_SERVICES</code></td>
+        <td>
+            <code>'doctor.services.cache.CacheServiceCheck',
+'doctor.services.celery.CeleryServiceCheck',
+'doctor.services.email.EmailServiceCheck',
+'doctor.services.storage.StorageServiceCheck',</code></td>
+        <td>Paths to service check classes.</td>
+    </tr>
 </table>
 
 ## Services
