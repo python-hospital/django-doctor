@@ -13,6 +13,7 @@ from django.views.debug import cleanse_setting
 
 from doctor.conf import TEMPLATE_CONTEXT
 from doctor.services import load_service_classes
+from doctor.utils import cleanse_dictionary
 
 # Fetch the socket name
 socket_name = socket.gethostname()
@@ -90,9 +91,7 @@ def technical_info(request):
         versions = sorted(versions, key=lambda version: version[0])
 
     # Return environment variables with sensitive content cleansed
-    environ = {}
-    for key, val in os.environ.iteritems():
-        environ[key] = cleanse_setting(key, val)
+    environ = cleanse_dictionary(os.environ)
 
     return render(request, 'doctor/technical_info.html', {
         'doctor': TEMPLATE_CONTEXT,
