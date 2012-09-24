@@ -1,6 +1,6 @@
-from django.contrib.sites.models import Site
-from django.core.mail import mail_admins
 from django.core.management.base import BaseCommand
+
+from doctor.services.email import EmailServiceCheck
 
 
 class Command(BaseCommand):
@@ -13,13 +13,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         verbosity = int(options.get('verbosity', 1))
-
-        message = 'This is a test mail from %(site_name)s. If you see this, mail is working :)' % {
-            'site_name': Site.objects.get_current().name,
-        }
+        
+        # Use the email service check test method
+        service_check = EmailServiceCheck()
 
         try:
-            mail_admins('Test mail', message, fail_silently=False)
+            # Try to send an email to admins
+            status = service_check.send_test_email()
 
             if verbosity > 0:
                 self.stdout.write('Mail successfully sent to admins.\n')
