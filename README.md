@@ -43,9 +43,9 @@ These are the available configurable settings, along with their default values:
     <tr>
         <td><code>DOCTOR_SERVICES</code></td>
         <td>
-            <code>'doctor.services.cache.CacheServiceCheck',
-'doctor.services.celery.CeleryServiceCheck',
-'doctor.services.email.EmailServiceCheck',
+            <code>'doctor.services.cache.CacheServiceCheck',<br>
+'doctor.services.celery.CeleryServiceCheck',<br>
+'doctor.services.email.EmailServiceCheck',<br>
 'doctor.services.storage.StorageServiceCheck',</code></td>
         <td>Paths to service check classes.</td>
     </tr>
