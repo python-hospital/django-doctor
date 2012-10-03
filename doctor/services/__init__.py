@@ -27,6 +27,7 @@ def load_service_classes():
     Load service classes defined in settings. 
     Code inspired by django-debug-toolbar, thanks!
     """
+
     service_classes = []
 
     for service_path in SERVICES:
@@ -41,7 +42,7 @@ def load_service_classes():
         try:
             module = import_module(service_module)
         except ImportError as e:
-            raise ImproperlyConfigured('Error importing debug panel %s: "%s' % (service_module, e))
+            raise ImproperlyConfigured('Error importing service check %s: "%s' % (service_module, e))
 
         try:
             service_class = getattr(module, service_classname)

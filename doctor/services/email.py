@@ -3,9 +3,9 @@ from django.contrib.sites.models import Site
 from django.core.mail import get_connection
 from django.core.mail import mail_admins
 from django.utils.datastructures import SortedDict
-from doctor.utils import cleanse_dictionary
 
 from doctor.services import BaseServiceCheck
+from doctor.utils import cleanse_dictionary
 
 
 class EmailServiceCheck(BaseServiceCheck):
