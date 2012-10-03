@@ -2,9 +2,10 @@ import datetime
 
 from django.conf import settings
 from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage, get_storage_class
+from django.core.files.storage import get_storage_class
 from django.utils.datastructures import SortedDict
 
+from doctor.conf import STORAGE_CLASSES
 from doctor.services import BaseServiceCheck
 
 
@@ -16,10 +17,10 @@ class StorageServiceCheck(BaseServiceCheck):
     name = 'Storage'
     #template = ''
 
-    def get_status_message(self):
+    def get_status_message(self, storage_class_path):
 
-        # TODO Support more storage backends
-        storage = default_storage
+        # Create an instance of the storage class
+        storage = get_storage_class(storage_class_path)()
 
         filename = 'storage_test'
         test_content = 'We are testing, 1 2 3.'
@@ -56,14 +57,16 @@ class StorageServiceCheck(BaseServiceCheck):
     def status(self):
 
         storage_info = {}
-        status_message = self.get_status_message()
 
-        # Create dictionary with status info
-        storage_info['default'] = {
-            'is_working': status_message == 'Storage tests passed.',
-            'message': status_message,
-            'settings': self.get_settings(),
-        }
+        for storage_class_path in STORAGE_CLASSES:
+            status_message = self.get_status_message(storage_class_path)
+
+            # Create dictionary with status info
+            storage_info[storage_class_path] = {
+                'is_working': status_message == 'Storage tests passed.',
+                'message': status_message,
+                'settings': self.get_settings(),
+            }
 
         return storage_info
 

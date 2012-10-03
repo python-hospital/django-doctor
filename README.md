@@ -13,7 +13,8 @@ Install `django-doctor` (available on PyPi):
 
 	pip install django-doctor
 
-Add it to `INSTALLED_APPS` in your `settings.py` (so Django can locate template):
+Add it to `INSTALLED_APPS` in your `settings.py` (so Django can locate 
+templates):
 
 	INSTALLED_APPS += ['doctor']
 
@@ -49,15 +50,34 @@ These are the available configurable settings, along with their default values:
 'doctor.services.storage.StorageServiceCheck',</code></td>
         <td>Paths to service check classes.</td>
     </tr>
+    <tr>
+        <td><code>DOCTOR_STORAGE_CLASSES</code></td>
+        <td>
+            <code>settings.DEFAULT_FILE_STORAGE,<br>
+settings.STATICFILES_STORAGE,</code></td>
+        <td>Paths to storage classes to check.</td>
+    </tr>
 </table>
 
 ## Services
 
-We are working on making a pluggable structure for the service check, work in progress. 
-Checks for cache and Sentry are currently included by default.
+We are working on making a pluggable structure for the service check, work in 
+progress. Checks for cache, Celery, email and storages are currently included 
+by default.
 
 
 ## Tests
 
 Run unit tests by running <code>python setup.py test</code>
 
+
+## TODO
+
+* Set up the project tests so they can run standalone
+* Refine the service class approach
+* Include sending of test email in a view?
+* Implement more health checks:
+    * Databases
+    * Haystack?
+    * Sentry?
+    * That the request.is_secure() check is properly set up

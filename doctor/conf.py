@@ -16,3 +16,8 @@ SERVICES = getattr(settings, 'DOCTOR_SERVICES', (
     'doctor.services.email.EmailServiceCheck',
     'doctor.services.storage.StorageServiceCheck',
 ))
+
+STORAGE_CLASSES = getattr(settings, 'DOCTOR_STORAGE_CLASSES', (
+    settings.DEFAULT_FILE_STORAGE,
+    settings.STATICFILES_STORAGE,
+))
