@@ -41,8 +41,13 @@ def health_check(request):
     Basic health check view, returns plain text response with 200 OK response.
     Useful for external monitor systems.
 
-    TODO: Should we limit this to some extent? (maybe INTERNAL_IPS?)
+    TODO: Actually check all the services before returning OK :)
     """
+
+    # Check for allowed remote IP addresses or superuser status
+    if not request.META.get('REMOTE_ADDR', '') in settings.INTERNAL_IPS:
+        if not request.user.is_superuser:
+            raise Http404('Allowed IP addresses or superusers only.')
 
     response = HttpResponse(content_type='text/plain')
     response['Cache-Control'] = 'no-cache'
@@ -102,7 +107,7 @@ def technical_info(request):
 
 def force_server_error(request):
     """
-    Raises an exception. Useful for testing Sentry, error reporting mails.
+    Raises an exception. Useful for testing Sentry, error reporting mails, etc.
     """
 
     # Reject non-superusers

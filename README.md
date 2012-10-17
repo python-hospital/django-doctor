@@ -59,6 +59,7 @@ settings.STATICFILES_STORAGE,</code></td>
     </tr>
 </table>
 
+
 ## Services
 
 We are working on making a pluggable structure for the service check, work in 
@@ -80,4 +81,4 @@ Run unit tests by running <code>python setup.py test</code>
     * Databases
     * Haystack?
     * Sentry?
-    * That the request.is_secure() check is properly set up
+    * request.is_secure() is properly set up

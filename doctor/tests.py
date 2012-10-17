@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -16,10 +17,14 @@ class DoctorAuthorizationTests(TestCase):
 
     def testAnonymous(self):
 
-        # Available for all users (for now)
+        # Health check is IP address filtered
         response = self.client.get(reverse('doctor-health-check'))
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(response['Content-Type'], 'text/plain')
+
+        if '127.0.0.1' in settings.INTERNAL_IPS:
+            self.assertEquals(response.status_code, 200)
+            self.assertEquals(response['Content-Type'], 'text/plain')
+        else:
+            self.assertEquals(response.status_code, 404)
 
         # Check non-accessable pages
         response = self.client.get(reverse('doctor-index'))
@@ -36,10 +41,14 @@ class DoctorAuthorizationTests(TestCase):
         # Sign in user
         self.client.login(username=self.user.username, password='1234')
 
-        # Available for all users (for now)
+        # Health check is IP address filtered
         response = self.client.get(reverse('doctor-health-check'))
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(response['Content-Type'], 'text/plain')
+
+        if '127.0.0.1' in settings.INTERNAL_IPS:
+            self.assertEquals(response.status_code, 200)
+            self.assertEquals(response['Content-Type'], 'text/plain')
+        else:
+            self.assertEquals(response.status_code, 404)
 
         # Check non-accessable pages
         response = self.client.get(reverse('doctor-index'))
