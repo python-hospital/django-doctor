@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.utils.datastructures import SortedDict
 from django.utils.importlib import import_module
 from django.views.debug import cleanse_setting
+from django.views.decorators.cache import never_cache
 
 from doctor.conf import TEMPLATE_CONTEXT
 from doctor.services import load_service_classes
@@ -36,6 +37,7 @@ def index(request):
         'services': services,
     })
 
+@never_cache
 def health_check(request):
     """
     Basic health check view, returns plain text response with 200 OK response.
@@ -50,7 +52,6 @@ def health_check(request):
             raise Http404('Allowed IP addresses or superusers only.')
 
     response = HttpResponse(content_type='text/plain')
-    response['Cache-Control'] = 'no-cache'
 
     # Generate message and hit the database
     msg = '%(domain)s running on %(socket_name)s is OK at %(datetime)s' % {
