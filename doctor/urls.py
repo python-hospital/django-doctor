@@ -1,4 +1,8 @@
-from django.conf.urls import patterns, include, url
+try:
+    from django.conf.urls import patterns, include, url
+except ImportError:  # Django < 1.4 compatibility
+    from django.conf.urls.defaults import *
+
 
 urlpatterns = patterns('doctor.views',
 
