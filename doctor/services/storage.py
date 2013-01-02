@@ -20,7 +20,10 @@ class StorageServiceCheck(BaseServiceCheck):
     def get_status_message(self, storage_class_path):
 
         # Create an instance of the storage class
-        storage = get_storage_class(storage_class_path)()
+        try:
+            storage = get_storage_class(storage_class_path)()
+        except Exception as exc:
+            return 'Could not load storage class: %s' % exc
 
         filename = 'storage_test'
         test_content = 'We are testing, 1 2 3.'
