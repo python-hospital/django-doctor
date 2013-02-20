@@ -1,4 +1,22 @@
-build/
-dist/
+# Local binaries.
+/bin/
+
+# Local configuration.
+#/etc/
+
+# Libraries (automatically installed).
+/lib/
+
+# Data files.
+/var/
+
+# Python files.
+*.pyc
 *.egg-info/
 *.egg/
+build/
+dist/
+
+# Editors' temporary buffers.
+*~
+.*.swp
