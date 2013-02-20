@@ -72,6 +72,19 @@ by default.
 Run unit tests by running <code>python setup.py test</code>
 
 
+## Write and run health checks just as tests
+
+### How to run health checks with nose
+
+Use nose's attrib plugin to select only tests with "is_healthcheck" attribute:
+
+    nosetests --all-modules --attr="is_healthcheck"
+
+The "--all-modules" option is required because, by default, nose's will ignore
+tests in the "healthchecks" directory, because of the match pattern. See
+also "--match" option.
+
+
 ## TODO
 
 * Set up the project tests so they can run standalone
