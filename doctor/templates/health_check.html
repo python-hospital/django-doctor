@@ -1,0 +1,12 @@
+<html>
+<head>
+</head>
+<body>
+    <p>{% if health_check_result.wasSuccessful %}OK{% else %}KO{% endif %}</p>
+    <ul>
+        <li>{{ health_check_result.testsRun }} tests run.</li>
+        <li>{{ health_check_result.failures|length }} failures.</li>
+        <li>{{ health_check_result.errors|length }} errors.</li>
+    </ul>
+</body>
+</html>
