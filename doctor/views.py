@@ -173,6 +173,7 @@ class HealthCheckLoader(unittest.TestLoader):
         parts = name.split('.')
         if module:
             parts.insert(0, module)
+        name = '.'.join(parts)
         # First, retrieve a module.
         module_obj = None
         path_parts = []
