@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # The actual django-doctor demo.
+    'doctor',
     'django_doctor_demo.homepage',  # Homepage.
     'django_doctor_demo.simple',  # Simple health-check samples.
     # This demo project is part of django-doctor test suite.
