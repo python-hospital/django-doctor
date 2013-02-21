@@ -172,7 +172,7 @@ class HealthCheckLoader(unittest.TestLoader):
         to health test objects, i.e. no callable allowed."""
         parts = name.split('.')
         if module:
-            parts.insert(module, 0)
+            parts.insert(0, module)
         # First, retrieve a module.
         module_obj = None
         path_parts = []
