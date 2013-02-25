@@ -20,7 +20,7 @@ class GlobalHealthCheckViewTestCase(TestCase):
         failures.
 
         """
-        path = '{}{}'.format(self.root, path)
+        path = '{root}{path}'.format(root=self.root, path=path)
         url = reverse(self.url_name, args=[path])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status_code)
