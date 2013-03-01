@@ -74,4 +74,5 @@ NOSE_ARGS = ['--verbose',
              '--cover-package=django_doctor_demo',
              '--no-path-adjustment',
              '--all-modules',
+             '--attr=!is_healthcheck',
              ]

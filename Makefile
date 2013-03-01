@@ -16,7 +16,7 @@ BUILDOUT_BOOTSTRAP = $(BUILDOUT_DIR)/bootstrap.py
 BUILDOUT_BOOTSTRAP_ARGS = -c $(BUILDOUT_CFG) --version=$(BUILDOUT_VERSION) --distribute buildout:directory=$(ROOT_DIR)
 BUILDOUT = $(BIN_DIR)/buildout
 BUILDOUT_ARGS = -N -c $(BUILDOUT_CFG) buildout:directory=$(ROOT_DIR)
-
+NOSE = $(BIN_DIR)/nosetests
 
 configure:
 	# Configuration is stored in etc/ folder. Not generated yet.
@@ -47,6 +47,10 @@ maintainer-clean: distclean
 	rm -rf $(ROOT_DIR)/lib/
 
 
+release:
+	bin/fullrelease
+
+
 test: test-demo
 
 
@@ -57,8 +61,11 @@ test-demo:
 
 demo: develop
 	bin/demo syncdb --noinput
+
+
+serve:
 	bin/demo runserver
 
 
-release:
-	bin/fullrelease
+healthcheck:
+	$(NOSE) --config=$(ROOT_DIR)/etc/nose.cfg --attr="is_healthcheck" django_doctor_demo

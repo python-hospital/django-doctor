@@ -36,15 +36,16 @@ Clone the project and install the demo:
    cd django-doctor/
    make demo
 
-It installs and runs the demo server on localhost, port 8000. So have a look
-at http://localhost:8000/
+Then:
+
+* Run the demo server on http://localhost:8000/ with ``make serve``.
+* Run demo project's health checks with ``make healthcheck``.
+* Browse and use :file:`demo/django_doctor_demo/` as a sandbox.
 
 .. note::
 
    If you cannot execute the Makefile, read it and adapt the few commands it
    contains to your needs.
-
-Browse and use :file:`demo/demoproject/` as a sandbox.
 
 
 **********
