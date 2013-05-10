@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """Health checks."""
-import doctor
+from hospital import HealthCheck
 
 
-class FakeHealthCheck(doctor.HealthCheck):
+class FakeHealthCheck(HealthCheck):
     """Check that health checks are captured."""
     def test_success(self):
         """Successful healthcheck is captured and passes."""

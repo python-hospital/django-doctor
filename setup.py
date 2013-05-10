@@ -19,6 +19,7 @@ setup(name='django-doctor',
     url='https://github.com/funkbit/django-doctor',
     include_package_data=True,
     packages=['doctor', 'doctor.services', 'doctor.management', 'doctor.management.commands'],
+    install_requires=['hospital'],
     tests_require=['django>=1.4,<1.5'],
     license='BSD',
     classifiers = (
