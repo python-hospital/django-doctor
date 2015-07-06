@@ -1,15 +1,14 @@
-try:
-    from django.conf.urls import patterns, url
-except ImportError:  # Django < 1.4 compatibility
-    from django.conf.urls.defaults import *
+from django.conf.urls import url
+
+from doctor import views
 
 
-urlpatterns = patterns('doctor.views',
+urlpatterns = [
 
-    url(r'^health-check/$', 'health_check', name='doctor-health-check'),
-    url(r'^technical/$', 'technical_info', name='doctor-technical'),
-    url(r'^server-error/$', 'force_server_error', name='doctor-server-error'),
+    url(r'^health-check/$', views.health_check, name='doctor-health-check'),
+    url(r'^technical/$', views.technical_info, name='doctor-technical'),
+    url(r'^server-error/$', views.force_server_error, name='doctor-server-error'),
 
-    url(r'^$', 'index', name='doctor-index'),
+    url(r'^$', views.index, name='doctor-index'),
 
-)
+]

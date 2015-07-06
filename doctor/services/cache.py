@@ -1,7 +1,11 @@
 import datetime
 
 from django.conf import settings
-from django.core.cache import get_cache
+try:
+    from django.core.cache import caches
+    get_cache = lambda k: caches[k]
+except ImportError: # Django < 1.7 compatibility
+    from django.core.cache import get_cache
 
 from doctor.services import BaseServiceCheck
 
@@ -12,7 +16,6 @@ class CacheServiceCheck(BaseServiceCheck):
     """
 
     name = 'Cache'
-    #template = ''
 
     def status(self):
 

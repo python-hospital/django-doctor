@@ -11,20 +11,20 @@ class BaseServiceCheck(object):
     TODO This is temporary, not happy with the current implementation.
     """
 
-    #name = 'Base'
-    #template = 'doctor/services/generic.html'
+    # name = 'Base'
+    # template = 'doctor/services/generic.html'
 
     def status(self):
         """
         Returns a dict of the status current.
         """
-        
+
         raise NotImplementedError('Method not implemented in inherited class.')
 
 
 def load_service_classes():
     """
-    Load service classes defined in settings. 
+    Load service classes defined in settings.
     Code inspired by django-debug-toolbar, thanks!
     """
 

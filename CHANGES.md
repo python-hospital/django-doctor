@@ -1,6 +1,11 @@
 # Django Doctor Changelog
 
 
+## 0.3.0 (2015-07-06)
+* Removed use of SortedDict, now uses OrderedDict available in Python >= 2.7
+* Added support for new caches lookup introduced in Django 1.7, in favor of get_cache.
+* Removed loading of url template tag from future, drops compatibility with Django 1.4
+
 ## 0.2.6 (2012-01-02)
 * Handle exceptions when loading storage classes.
 * Compatibility with Django < 1.4 URL config import.

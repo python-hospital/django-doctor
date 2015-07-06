@@ -9,7 +9,6 @@ class CeleryServiceCheck(BaseServiceCheck):
     """
 
     name = 'Celery'
-    #template = ''
 
     def status(self):
 
@@ -35,7 +34,7 @@ class CeleryServiceCheck(BaseServiceCheck):
                 celery_message = 'Could not connect to the backend: %s' % str(ex)
             except ImportError as ex:
                 celery_message = str(ex)
-            
+
             # Format the status messages
             if is_celery_working:
                 for key, val in celery_message.iteritems():

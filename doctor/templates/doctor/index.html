@@ -1,4 +1,4 @@
-{% extends "doctor/base.html" %}
+{% extends 'doctor/base.html' %}
 {% load i18n %}
 
 {% block title %}{% trans 'Health checks' %} &mdash; {{ block.super }}{% endblock %}
@@ -33,7 +33,7 @@
 							{% endif %}
 						</td>
 						<td>
-							
+
 							{# List key/val settings #}
 							<table class="table table-bordered table-condensed">
 								<thead>

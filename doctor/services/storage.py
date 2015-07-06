@@ -1,9 +1,8 @@
-import datetime
+from collections import OrderedDict
 
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import get_storage_class
-from django.utils.datastructures import SortedDict
 
 from doctor.conf import STORAGE_CLASSES
 from doctor.services import BaseServiceCheck
@@ -15,7 +14,6 @@ class StorageServiceCheck(BaseServiceCheck):
     """
 
     name = 'Storage'
-    #template = ''
 
     def get_status_message(self, storage_class_path):
 
@@ -78,7 +76,7 @@ class StorageServiceCheck(BaseServiceCheck):
         Returns dictionary of relevant storage settings.
         """
 
-        storage_settings = SortedDict({})
+        storage_settings = OrderedDict({})
         relevant_settings = (
             'DEFAULT_FILE_STORAGE',
             'STATICFILES_STORAGE',

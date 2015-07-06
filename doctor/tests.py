@@ -91,7 +91,7 @@ class DoctorViewTests(TestCase):
         self.assertTemplateUsed(response, 'doctor/technical_info.html')
 
     def testForceServerError(self):
-        
+
         # Make superuser
         self.user.is_superuser = True
         self.user.save()

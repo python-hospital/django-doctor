@@ -1,8 +1,8 @@
+from collections import OrderedDict
+
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.mail import get_connection
 from django.core.mail import mail_admins
-from django.utils.datastructures import SortedDict
 
 from doctor.services import BaseServiceCheck
 from doctor.utils import cleanse_dictionary
@@ -14,7 +14,6 @@ class EmailServiceCheck(BaseServiceCheck):
     """
 
     name = 'Email'
-    #template = ''
 
     def send_test_email(self):
         """
@@ -50,7 +49,7 @@ class EmailServiceCheck(BaseServiceCheck):
         variables cleansed.
         """
 
-        email_settings = SortedDict({})
+        email_settings = OrderedDict({})
         relevant_settings = (
             'EMAIL_BACKEND',
             'EMAIL_HOST',

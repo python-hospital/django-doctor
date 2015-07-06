@@ -19,7 +19,7 @@ setup(name='django-doctor',
     url='https://github.com/funkbit/django-doctor',
     include_package_data=True,
     packages=['doctor', 'doctor.services', 'doctor.management', 'doctor.management.commands'],
-    tests_require=['django>=1.4,<1.5'],
+    tests_require=['django>=1.5'],
     license='BSD',
     classifiers=(
         "Development Status :: 3 - Alpha",
@@ -27,7 +27,6 @@ setup(name='django-doctor',
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
     )
 )

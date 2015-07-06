@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import datetime
 import os
 import socket
@@ -7,9 +8,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
-from django.utils.datastructures import SortedDict
 from django.utils.importlib import import_module
-from django.views.debug import cleanse_setting
 from django.views.decorators.cache import never_cache
 
 from doctor.conf import TEMPLATE_CONTEXT
@@ -37,6 +36,7 @@ def index(request):
         'services': services,
     })
 
+
 @never_cache
 def health_check(request):
     """
@@ -62,6 +62,7 @@ def health_check(request):
     response.write(msg)
 
     return response
+
 
 def technical_info(request):
     """
@@ -101,10 +102,11 @@ def technical_info(request):
 
     return render(request, 'doctor/technical_info.html', {
         'doctor': TEMPLATE_CONTEXT,
-        'versions': SortedDict(versions),
+        'versions': OrderedDict(versions),
         'environ': environ,
         'paths': sys.path,
     })
+
 
 def force_server_error(request):
     """
@@ -116,5 +118,3 @@ def force_server_error(request):
         raise Http404('Superusers only.')
 
     raise Exception('This unhandled exception is here by design.')
-
-    return HttpResponse('This should never show up.', content_type='text/plain')
