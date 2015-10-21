@@ -1,5 +1,7 @@
 # Django Doctor Changelog
 
+## 0.4.0 (2015-10-21)
+* Now uses Python's `import_module`, drops support for Python < 2.7
 
 ## 0.3.0 (2015-07-06)
 * Removed use of SortedDict, now uses OrderedDict available in Python >= 2.7

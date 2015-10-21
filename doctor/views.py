@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from importlib import import_module
 import datetime
 import os
 import socket
@@ -8,7 +9,6 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
-from django.utils.importlib import import_module
 from django.views.decorators.cache import never_cache
 
 from doctor.conf import TEMPLATE_CONTEXT
